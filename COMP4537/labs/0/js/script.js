@@ -236,7 +236,7 @@ class Container {
             const expected = this.answerKey[this._nextExpected];
             if (!expected) return false; // nothing expected; likely finished
 
-            // Correct button - match by id
+            // Correct button (match by id)
             if (btn.id === expected.id) {
                 btn.showLabel();  // reveal now
                 btn.lock();       // prevent further clicks on this button
@@ -247,7 +247,7 @@ class Container {
                     this.buttons.forEach(b => b.clearRevealGuard());
                     this.onWin();
                 }
-                return false;  // we handled reveal ourselves
+                return false; 
             }
             this.onFail();
             return false;
