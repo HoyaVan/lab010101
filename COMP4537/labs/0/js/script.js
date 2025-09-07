@@ -1,4 +1,4 @@
-import { USER_MESSAGES } from "../lang/message/en/user.js";
+import { USER_MESSAGES } from "../lang/messages/en/user.js";
 
 const NUM_BUTTON_MIN = 3;
 const NUM_BUTTON_MAX = 7;
