@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab0 memory game</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="./js/script.js"></script>
+</head>
+<body>
+    <div id="app">
+        <label id="promptLabel" class="entryPoint" for="userInput">How many buttons to create?</label>
+        <p class="entryPoint">
+            <input id="userInput" type="text" min="3" max="7" placeholder="A number between 3 and 7">
+            <button id="goBtn" type="button">Go!</button>
+        </p>
+        <div id="board"></div>
+    </div>
+</html>

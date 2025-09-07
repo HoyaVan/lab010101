@@ -1,0 +1,41 @@
+/* the board area */
+#board {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100vw;
+  height: min(60vh, 500px);
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  margin-top: 1rem;
+  display: flex;        /* optional: line them up if you aren't juggling yet */
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+/* each "card" */
+.box {
+  /* if you plan to juggle with absolute positioning later, JS will set position:absolute */
+  width: 10em;
+  height: 5em;
+  border: 0;
+  border-radius: .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #111;          /* text color on light backgrounds */
+  cursor: pointer;
+}
+
+.label { font-weight: 700; }
+.is-locked { opacity: .6; cursor: not-allowed; }
+
+/* color palette classes — names MUST match your JS */
+.color-1 { background:#e5989b; }
+.color-2 { background:#f9c74f; }
+.color-3 { background:#90be6d; }
+.color-4 { background:#577590; color: #fff; } /* light text on dark */
+.color-5 { background:#f94144; }
+.color-6 { background:#f8961e; }
+.color-7 { background:#43aa8b; }
