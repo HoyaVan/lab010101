@@ -102,7 +102,7 @@ class Container {
         const numButton = parseInt(this.numInput.value, DECIMAL_INPUT_CONVERTOR);
 
         if (Number.isNaN(numButton) || numButton > NUM_BUTTON_MAX || numButton < NUM_BUTTON_MIN) {
-            alert(t("RANGE", { min: NUM_BUTTON_MIN, max: NUM_BUTTON_MAX }));
+            alert(USER_MESSAGES.RANGE.replace("{min}", NUM_BUTTON_MIN).replace("{max}", NUM_BUTTON_MAX));
             return;
         }
 
