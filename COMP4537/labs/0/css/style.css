@@ -1,4 +1,4 @@
-/* the board area */
+/* the board area - display: flex; line them up if it doesn't juggle yet */
 #board {
   position: relative;
   overflow: hidden;
@@ -8,14 +8,13 @@
   border: 1px solid #ccc;
   border-radius: .5rem;
   margin-top: 1rem;
-  display: flex;        /* optional: line them up if you aren't juggling yet */
+  display: flex;        
   flex-wrap: wrap;
   gap: .5rem;
 }
 
-/* each "card" */
+/* each "card" -text color on light backgrounds */
 .box {
-  /* if you plan to juggle with absolute positioning later, JS will set position:absolute */
   width: 10em;
   height: 5em;
   border: 0;
@@ -24,18 +23,18 @@
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
-  color: #111;          /* text color on light backgrounds */
+  color: #111;         
   cursor: pointer;
 }
 
 .label { font-weight: 700; }
 .is-locked { opacity: .6; cursor: not-allowed; }
 
-/* color palette classes — names MUST match your JS */
-.color-1 { background:#e5989b; }
-.color-2 { background:#f9c74f; }
-.color-3 { background:#90be6d; }
-.color-4 { background:#577590; color: #fff; } /* light text on dark */
-.color-5 { background:#f94144; }
-.color-6 { background:#f8961e; }
-.color-7 { background:#43aa8b; }
+/* color palette classes - light text on dark */
+.color-1 { background:#e5989b; color: #fff; }
+.color-2 { background:#f9c74f; color: #fff; }
+.color-3 { background:#90be6d; color: #fff; }
+.color-4 { background:#577590; color: #fff; } 
+.color-5 { background:#f94144; color: #fff; }
+.color-6 { background:#f8961e; color: #fff; }
+.color-7 { background:#43aa8b; color: #fff; }

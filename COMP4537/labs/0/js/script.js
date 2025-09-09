@@ -1,4 +1,4 @@
-import { USER_MESSAGES } from "../lang/messages/en/user.js";
+import { formatMessage } from "../lang/messages/en/user.js";
 
 const NUM_BUTTON_MIN = 3;
 const NUM_BUTTON_MAX = 7;
@@ -7,7 +7,6 @@ const GAME_START_LOADING_TIME = 1000;
 const PAUSE_INTERVAL_TIME = 2000;
 
 const CLS_BOX = "box";
-const CLS_LABEL = "label";
 const CLS_LOCKED = "is-locked";
 
 class Label {
@@ -15,10 +14,8 @@ class Label {
         this.text = text;
         this.visible = visible;
         this.el = document.createElement('span');
-        this.el.className = CLS_LABEL;
         this.sync();
     }
-
     sync() { this.el.textContent = this.visible ? String(this.text) : ""; }
     show() { this.visible = true; this.sync(); }
     hide() { this.visible = false; this.sync(); }
@@ -31,26 +28,23 @@ class Button {
         this.colorClass = Button.takeColor();
 
         this.el = document.createElement('button');
-        this.el.className = `${CLS_BOX} ${this.colorClass}`;
-        this.el.dataset.id = String(id);
+        this.el.className = `${CLS_BOX} ${this.colorClass}`; // = <button class="box color-3">...</button>
         this.el.appendChild(this.label.el);
 
         this.locked = false;
         this._revealGuard = null;
 
-        //  ensure the pressed card is on top when overlapping
+        //  ensure the pressed button is on top when overlapping
         this.el.addEventListener("mousedown", () => {
             Button._z = (Button._z || 1) + 1;
             this.el.style.zIndex = String(Button._z);
         });
 
         this.el.addEventListener("click", () => {
-            if (this.locked) return;
-            // Ask container if this click is OK
+            if (this.locked) return;  // ignore if locked
             if (this._revealGuard && this._revealGuard(this) === false) return;
-            // container handled (either revealed all or prevented)
-            if (!this.label.visible) this.label.show(); 
-            // default reveal-once
+            // if guard says "no", do nothing; if it handled things, also do nothing more
+            if (!this.label.visible) this.label.show();  // default reveal-once
         });
     }
 
@@ -65,18 +59,8 @@ class Button {
         Button.colorPool.pop();
         return picked;
     }
-
-    getLabelColorPair() {
-        return {
-            id: this.id,                
-            label: this.label.text,       
-            color: this.colorClass      
-        };
-    }
-
     setRevealGuard(fn) { this._revealGuard = (typeof fn === "function") ? fn : null; }
     clearRevealGuard() { this._revealGuard = null; }
-
     hideLabel() { this.label.hide(); }
     showLabel() { this.label.show(); }
     lock() { this.locked = true; this.el.classList.add(CLS_LOCKED); }
@@ -102,22 +86,16 @@ class Container {
         const numButton = parseInt(this.numInput.value, DECIMAL_INPUT_CONVERTOR);
 
         if (Number.isNaN(numButton) || numButton > NUM_BUTTON_MAX || numButton < NUM_BUTTON_MIN) {
-            alert(USER_MESSAGES.RANGE.replace("{min}", NUM_BUTTON_MIN).replace("{max}", NUM_BUTTON_MAX));
+            alert(formatMessage("RANGE", { min: NUM_BUTTON_MIN, max: NUM_BUTTON_MAX}));
             return;
         }
 
         this.setGoLocked(true);
+        
         try {
             this.build(numButton);
             this.render();
-
             this.saveLabelColorPairs()
-
-            // make the board a bounded arena that fits the window
-            const rp = this.renderPoint;
-            rp.style.position = "relative";
-            rp.style.overflow = "hidden";
-
             this.lockAll()
 
             // pause n seconds
@@ -174,7 +152,6 @@ class Container {
             // lock size so switching to absolute doesn't reflow
             btn.el.style.width = `${r.width}px`;
             btn.el.style.height = `${r.height}px`;
-
             btn.el.style.position = "absolute";
             btn.el.style.left = `${left}px`;
             btn.el.style.top = `${top}px`;
@@ -266,14 +243,14 @@ class Container {
     }
 
     onWin() {
-        alert(USER_MESSAGES.EXCELLENT);
+        alert(formatMessage("EXCELLENT"));
         this.lockAll();
         this.buttons.forEach(b => b.clearRevealGuard());
         this.setGoLocked(false);
     }
 
     onFail() {
-        alert(USER_MESSAGES.WRONG);
+        alert(formatMessage("WRONG"));
         this.revealAllLabels();
         this.lockAll();
         this.buttons.forEach(b => b.clearRevealGuard());

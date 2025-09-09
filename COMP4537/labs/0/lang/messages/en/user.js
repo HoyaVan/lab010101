@@ -4,7 +4,7 @@ export const USER_MESSAGES = {
     EXCELLENT: "Excellent memory!"
 };
 
-export function t(key, args = {}) {
+export function formatMessage(key, args = {}) {
     let s = USER_MESSAGES[key] ?? "";
     return s.replace(/\{(\w+)\}/g, (_, k) => (args[k] ?? ""));
 }
